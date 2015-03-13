@@ -12,7 +12,7 @@ describe('Export', function() {
 describe('Exported function', function() {
 
     it('should return undefined when no arguments are given', function() {
-        expect( metacarattere() ).to.be('undefined');
+        expect( metacarattere() ).to.be.undefined();
     });
 
     it('should return a curried function when one argument is given', function() {
