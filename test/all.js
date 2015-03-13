@@ -12,7 +12,7 @@ describe('Export', function() {
 describe('Exported function', function() {
 
     it('should return undefined when no arguments are given', function() {
-        expect( metacarattere() ).to.be.undefined();
+        expect( metacarattere() ).to.be.undefined;
     });
 
     it('should return a curried function when one argument is given', function() {
@@ -31,7 +31,7 @@ describe('Pattern matcher', function() {
         var pattern = "/a/b/c";
 
         ['/a','a/b/c/d/e'].forEach( function(url) {
-            expect( metacarattere(pattern, url) ).to.be.undefined();
+            expect( metacarattere(pattern, url) ).to.be.undefined;
         });
     });
 
@@ -54,8 +54,8 @@ describe('Pattern matcher', function() {
     it('should not match partly', function(){
         var pattern = metacarattere("/vendor/:name/product/:prod");
 
-        expect( pattern('/vendor/apple') ).to.be.undefined();
+        expect( pattern('/vendor/apple') ).to.be.undefined;
         expect( pattern('/vendor/apple/product/macbookair') ).to.be.an('object');
-        expect( pattern('/vendor/microsoft/product/codeplex/accounts/locked') ).to.be.undefined();
+        expect( pattern('/vendor/microsoft/product/codeplex/accounts/locked') ).to.be.undefined;
     });
 });
