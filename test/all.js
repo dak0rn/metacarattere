@@ -62,6 +62,7 @@ describe('Pattern matcher', function() {
 
         expect( pattern('/vendor/apple') ).to.be.undefined;
         expect( pattern('/vendor/apple/product/macbookair') ).to.be.an('object');
+        expect( pattern('/vendor/apple/product/macbookair') ).to.deep.equal( { "name": "apple", "prod": "macbookair" } );
         expect( pattern('/vendor/microsoft/product/codeplex/accounts/locked') ).to.be.undefined;
     });
 });
