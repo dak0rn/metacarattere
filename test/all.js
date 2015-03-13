@@ -22,5 +22,32 @@ describe('Exported function', function() {
     it('should not return a function when more than one argument is given', function() {
         expect( metacarattere('pattern','url') ).to.not.be.a('function');
     });
-    
+
+});
+
+describe('Pattern matcher', function() {
+
+    it('should return undefined if the URLs do not have the same number of fields', function() {
+        var pattern = "/a/b/c";
+
+        ['/a','a/b/c/d/e'].forEach( function(url) {
+            expect( metacarattere(pattern, url) ).to.be.undefined();
+        });
+    });
+
+    it('should match correctly', function() {
+        var pattern = "/employees/:id/status/:state";
+        var url     = "/employees/4/status/fired";
+        var result  = { "id": "4", "state": "fired" };
+
+        expect( metacarattere(pattern, url) ).to.deep.equal(result);
+    });
+
+    it('should match using the returned function', function() {
+        var pattern = "/employees/:id/status/:state";
+        var url     = "/employees/4/status/fired";
+        var result  = { "id": "4", "state": "fired" };
+
+        expect( metacarattere(pattern)(url) ).to.deep.equal(result);
+    });
 });
