@@ -50,4 +50,12 @@ describe('Pattern matcher', function() {
 
         expect( metacarattere(pattern)(url) ).to.deep.equal(result);
     });
+
+    it('should not match partly', function(){
+        var pattern = metacarattere("/vendor/:name/product/:prod");
+
+        expect( pattern('/vendor/apple') ).to.be.undefined();
+        expect( pattern('/vendor/apple/product/macbookair') ).to.be.an('object');
+        expect( pattern('/vendor/microsoft/product/codeplex/accounts/locked') ).to.be.undefined();
+    });
 });
