@@ -22,11 +22,12 @@
     // References to native functions
     // This is used to make the script runnable
     // in environments that changed default functions
-    var _substr = String.prototype.substr;
+    var _substr  = String.prototype.substr;
     var _replace = String.prototype.replace;
     var _split   = String.prototype.split;
     var _shift   = Array.prototype.shift;
     var _charAt  = String.prototype.charAt;
+    var _push    = Array.prototype.push;
 
     var substr = function(str, s, e) {
         return _substr.call(str,s,e);
@@ -52,6 +53,10 @@
         return _charAt.call(str,pos);
     };
 
+    var push = function(array, value) {
+        return _push.call(array,value);
+    };
+
     // Symbols
     var symbols = {
         slash: '/',
@@ -63,7 +68,9 @@
     // Helper functions
 
     // Returns true if the given string is a placeholder
-    var isPlaceholder = function(what) { return symbols.colon === first(what); };
+    var isPlaceholder = function(what) {
+        return symbols.colon === first(what) && what.length > 1;
+    };
 
     // Returns the name of a placeholder
     var getPlaceholder = function(what) { return substr(what,1); };
@@ -96,6 +103,69 @@
     // Main function
     var metacarattere = function(pattern, url) {
 
+        // Normalize the pattern
+        pattern = normalize(pattern);
+
+        if( 'undefined' === typeof pattern )
+            return;
+
+        // List of patterns
+        var ptrns = split( pattern, symbols.slash );
+
+        // This is the real matcher
+        var matcher = function(url) {
+            var rqst = normalize(url);
+
+            if( 'undefined' === typeof rqst )
+                return undefined;
+
+            rqst = split( rqst, symbols.slash );
+
+            // Different number of patterns?
+            // -> Return undefined
+            if( ptrns.length !== rqst.length )
+                return;
+
+            var values = {};
+            var pValue,
+                kValue;
+            var i = 0;
+
+
+            // Process all parts
+            while( i < ptrns.length ) {
+                pValue = ptrns[i++];
+                kValue = rqst.shift();
+
+                //console.log(pValue, kValue);
+
+                // Something went wrong? Done.
+                if( 'undefined' === typeof pValue || 'undefined' === typeof kValue )
+                    return;
+
+                // Same pattern? Skip
+                if( pValue === kValue )
+                    continue;
+
+                // Not a placeholder?
+                // Just empty?
+                // Pattern does not match
+                if( ! isPlaceholder(pValue) || "" === kValue )
+                    return;
+
+                pValue = getPlaceholder(pValue);
+
+                values[pValue] = kValue;
+            }
+
+            return values;
+        };
+
+        // Curried or not?
+        if( 'undefined' === typeof url )
+            return matcher;
+        else
+            return matcher(url);
     };
 
     return function(pattern, url){
