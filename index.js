@@ -15,7 +15,7 @@
     }
     else {
         // Browser globals (root is window)
-        root.returnExports = factory();
+        root.metacarattere = factory();
     }
 } (this, function () {
 
