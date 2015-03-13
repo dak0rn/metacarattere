@@ -1,0 +1,28 @@
+{
+  "name": "metacarattere",
+  "main": "index.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/dak0rn/metacarattere",
+  "authors": [
+    "dak0rn <daniel@suitsoft.eu>"
+  ],
+  "description": "A small URL pattern matcher",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "URL",
+    "pattern",
+    "matcher"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
