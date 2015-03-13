@@ -10,5 +10,17 @@ describe('Export', function() {
 });
 
 describe('Exported function', function() {
+
+    it('should return undefined when no arguments are given', function() {
+        expect( metacarattere() ).to.be('undefined');
+    });
+
+    it('should return a curried function when one argument is given', function() {
+        expect( metacarattere('pattern') ).to.be.a('function');
+    });
+
+    it('should not return a function when more than one argument is given', function() {
+        expect( metacarattere('pattern','url') ).to.not.be.a('function');
+    });
     
 });
