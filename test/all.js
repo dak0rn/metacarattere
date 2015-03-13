@@ -35,6 +35,12 @@ describe('Pattern matcher', function() {
         });
     });
 
+    it('should return undefined for invalid strings', function() {
+        expect( metacarattere(42) ).to.be.undefined;
+        expect( metacarattere('/:id',4) ).to.be.undefined;
+        expect( metacarattere('/:id')({a:99}) ).to.be.undefined;
+    });
+
     it('should match correctly', function() {
         var pattern = "/employees/:id/status/:state";
         var url     = "/employees/4/status/fired";
