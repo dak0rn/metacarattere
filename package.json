@@ -1,0 +1,28 @@
+{
+  "name": "metacarattere",
+  "version": "1.0.0",
+  "description": "A small URL pattern matcher",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://dak0rn@github.com/dak0rn/metacarattere.git"
+  },
+  "keywords": [
+    "url",
+    "pattern",
+    "matching"
+  ],
+  "author": "dak0rn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dak0rn/metacarattere/issues"
+  },
+  "homepage": "https://github.com/dak0rn/metacarattere",
+  "devDependencies": {
+    "chai": "^2.1.1",
+    "mocha": "^2.2.1"
+  }
+}
