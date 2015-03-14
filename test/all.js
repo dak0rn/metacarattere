@@ -32,11 +32,11 @@ describe('Pattern matcher', function() {
         // Should not throw any exception
     });
 
-    it('should return undefined if the URLs do not have the same number of fields', function() {
+    it('should return undefined or null if the URLs do not have the same number of fields', function() {
         var pattern = "/a/b/c";
 
         ['/a','a/b/c/d/e'].forEach( function(url) {
-            expect( metacarattere(pattern, url) ).to.be.undefined;
+            expect( metacarattere(pattern, url) ).not.to.exist;
         });
     });
 
