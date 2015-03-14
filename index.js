@@ -128,15 +128,21 @@
 
         // Extract placeholder names
         if( null !== placeholders )
-            map(placeholders, getPlaceholder );
+            placeholders = map(placeholders, getPlaceholder );
         else
             placeholders = [];
+
+
 
         // Create a valid regex out of the pattern
         // /api/:version/users/:id  =>  ^/api/([^\/]+)/users/([^\/]+)$
         var compiledExpression = "^" + replace(pattern, symbols.placeholder, symbols.regexPlaceholder) + "$";
 
         var matcher = function(url) {
+
+            if( 'string' !== typeof url )
+                return null;
+
             var values = match(url, compiledExpression);
             var i;
             var result = {};
