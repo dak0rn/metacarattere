@@ -28,6 +28,8 @@
     var _shift   = Array.prototype.shift;
     var _charAt  = String.prototype.charAt;
     var _push    = Array.prototype.push;
+    var _map     = Array.prototype.map;
+    var _match   = String.prototype.match;
 
     var substr = function(str, s, e) {
         return _substr.call(str,s,e);
@@ -57,12 +59,27 @@
         return _push.call(array,value);
     };
 
+    var map = function(array,fn) {
+        return _map.call(array,fn);
+    };
+
+    var match = function(string, what) {
+        return _match.call(string, what);
+    };
+
     // Symbols
     var symbols = {
         slash: '/',
         colon: ':',
 
-        multiSlashReplace: /[\/]{2,}/g
+        // Used to replace multiple slashes
+        multiSlashReplace: /[\/]{2,}/g,
+
+        // Used to detect placeholders
+        placeholder: /\/:\w+/g,
+
+        // Placeholder inserted into the regex
+        regexPlaceholder: "/([^\/]+)"
     };
 
     // Helper functions
@@ -73,7 +90,7 @@
     };
 
     // Returns the name of a placeholder
-    var getPlaceholder = function(what) { return substr(what,1); };
+    var getPlaceholder = function(what) { return substr(what,2); };
 
     // Normalizes a given URL be removing
     // leading or trailing slashes and multiple slashes
@@ -100,8 +117,53 @@
         return what;
     };
 
+
+    var metacarattere = function( pattern, url ) {
+        
+        // Match placeholders
+        var placeholders = match(pattern, symbols.placeholder);
+
+        // Extract placeholder names
+        if( null !== placeholders )
+            map(placeholders, getPlaceholder );
+        else
+            placeholders = [];
+
+        // Create a valid regex out of the pattern
+        // /api/:version/users/:id  =>  ^/api/([^\/]+)/users/([^\/]+)$
+        var compiledExpression = "^" + replace(pattern, symbols.placeholder, symbols.regexPlaceholder) + "$";
+
+        var matcher = function(url) {
+            var values = match(url, compiledExpression);
+            var i;
+            var result = {};
+            var len = placeholders.length;
+
+            if( null === values )
+                return null;
+
+            // The first match contains the whole expression: skip it
+            shift(values);
+
+            if( values.length !== len )
+                return null;
+
+            for( i = 0; i < len; i++ ) {
+                result[ placeholders[i] ] = values[i];
+            }
+
+            return values;
+        };
+
+        if( 'undefined' === typeof url )
+            return matcher;
+        else
+            return matcher(url);
+
+    };
+
     // Main function
-    var metacarattere = function(pattern, url) {
+    var oldMetacarattere = function(pattern, url) {
 
         // Normalize the pattern
         pattern = normalize(pattern);
