@@ -120,7 +120,7 @@
 
     var metacarattere = function( pattern, url ) {
 
-        if( 'undefined' === typeof pattern )
+        if( 'string' !== typeof pattern )
             return undefined;
 
         // Match placeholders
