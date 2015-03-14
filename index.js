@@ -155,7 +155,7 @@
                 result[ placeholders[i] ] = values[i];
             }
 
-            return values;
+            return result;
         };
 
         if( 'undefined' === typeof url )
