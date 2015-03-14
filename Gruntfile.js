@@ -17,11 +17,19 @@ module.exports = function(grunt) {
         },
 
         mochaTest: {
-            all: {
+            dev: {
                 options: {
                     reporter: 'nyan'
                 },
-                src: ['test/*.js']
+                src: ['test/dev.js']
+            },
+
+            minified: {
+                options: {
+                    reporter: 'nyan'
+                },
+
+                src: ['test/minified.js']
             }
         }
 
@@ -31,6 +39,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask('test',['mochaTest']);
-    grunt.registerTask('default',['test','uglify']);
+    grunt.registerTask('default',['test:dev','uglify', 'test:minified']);
 
 };
