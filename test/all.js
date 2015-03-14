@@ -27,6 +27,11 @@ describe('Exported function', function() {
 
 describe('Pattern matcher', function() {
 
+    it('should accept patterns w/out placeholders', function(){
+        metacarattere("/no/pattern","/no/pattern");
+        // Should not throw any exception
+    });
+
     it('should return undefined if the URLs do not have the same number of fields', function() {
         var pattern = "/a/b/c";
 
