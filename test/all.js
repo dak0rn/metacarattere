@@ -41,9 +41,9 @@ describe('Pattern matcher', function() {
     });
 
     it('should return undefined for invalid strings', function() {
-        expect( metacarattere(42) ).to.be.undefined;
-        expect( metacarattere('/:id',4) ).to.be.undefined;
-        expect( metacarattere('/:id')({a:99}) ).to.be.undefined;
+        expect( metacarattere(42) ).not.to.exist;
+        expect( metacarattere('/:id',4) ).not.to.exist;
+        expect( metacarattere('/:id')({a:99}) ).not.to.exist;
     });
 
     it('should match correctly', function() {
@@ -65,9 +65,9 @@ describe('Pattern matcher', function() {
     it('should not match partly', function(){
         var pattern = metacarattere("/vendor/:name/product/:prod");
 
-        expect( pattern('/vendor/apple') ).to.be.undefined;
+        expect( pattern('/vendor/apple') ).not.to.exist;
         expect( pattern('/vendor/apple/product/macbookair') ).to.be.an('object');
         expect( pattern('/vendor/apple/product/macbookair') ).to.deep.equal( { "name": "apple", "prod": "macbookair" } );
-        expect( pattern('/vendor/microsoft/product/codeplex/accounts/locked') ).to.be.undefined;
+        expect( pattern('/vendor/microsoft/product/codeplex/accounts/locked') ).not.to.exist;
     });
 });
