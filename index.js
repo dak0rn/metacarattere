@@ -119,7 +119,10 @@
 
 
     var metacarattere = function( pattern, url ) {
-        
+
+        if( 'undefined' === typeof pattern )
+            return undefined;
+
         // Match placeholders
         var placeholders = match(pattern, symbols.placeholder);
 
