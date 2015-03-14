@@ -39,6 +39,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     grunt.registerTask('test',['mochaTest']);
-    grunt.registerTask('default',['test:dev','uglify', 'test:minified']);
+    grunt.registerTask('default',['mochaTest:dev','uglify', 'mochaTest:minified']);
 
 };
