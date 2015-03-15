@@ -14,100 +14,123 @@ module.exports = function(metacarattere) {
     describe('Exported function', function() {
 
         it('should return undefined when invoked', function() {
-            expect( metacarattere('pattern') ).to.be.undefined;
+            expect( metacarattere(':pattern') ).to.be.undefined;
         });
 
         it('should return an object when invoked with new', function() {
-            expect( new metacarattere('pattern') ).to.be.an('object');
+            expect( new metacarattere(':pattern') ).to.be.an('object');
         });
 
         it('should not throw if no argument is given', function() {
             new metacarattere();        // That's all
         });
 
+        it('should accept patterns w/out placeholders', function(){
+            var inst = new metacarattere('pattern');
+        });
+
     });
 
-    describe('metacarattere object', function() {
+    describe('metacarattere instance', function() {
 
         describe('match() function', function() {
 
-            it('should have a match() function', function() {
-                var inst = new metacarattere('pattern');
+            it('should exist', function() {
+                var inst = new metacarattere(':pattern');
 
                 expect( inst.match ).to.be.a('function');
             });
 
             it('should throw if no arguments are given', function() {
 
-                var inst = new metacarattere('pattern');
+                var inst = new metacarattere(':pattern');
                 expect( inst.match ).to.throw(/no arguments given/);
             });
+
+            it('should return false if it does not match', function() {
+                var inst = new metacarattere('/a/b/c');
+
+                ['/a','a/b/c/d/e'].forEach( function(url) {
+                    expect( inst.parse(url) ).to.be.false;
+                });
+            });
+
+            it('should return true if it does match', function() {
+                var inst = new metacarattere('/a/:b/:c');
+
+                ['/a/3/4','/a/true/false','/a/hello/world'].forEach( function(url) {
+                    expect(inst.match(url)).to.be.true;
+                });
+            });
+
+            it('should not match partly', function(){
+                var inst = new metacarattere("/vendor/:name/product/:prod");
+
+                expect( inst.match('/vendor/apple') ).to.be.false;
+                expect( inst.match('/vendor/apple/product/macbookair') ).to.be.true;
+                expect( inst.match('/vendor/apple/product/macbookair') ).to.be.true;
+                expect( inst.match('/vendor/microsoft/product/codeplex/accounts/locked') ).not.to.be.false;
+            });
+
+            it('should not match when no pattern is given', function() {
+                var inst = new metacarattere();
+
+                ['/a/3/4','/api/true/false','/collection/hello/world'].forEach( function(url) {
+                    expect(inst.match(url)).to.be.false;
+                });
+            });
+
 
         });
 
         describe('parse() function', function() {
 
-            it('should have a parse() function', function() {
-                var inst = new metacarattere('pattern');
+            it('should exist', function(){
+                var inst = new metacarattere(':pattern');
 
                 expect( inst.parse ).to.be.a('function');
             });
 
             it('should throw if no arguments are given', function() {
 
-                var inst = new metacarattere('pattern');
+                var inst = new metacarattere(':pattern');
                 expect( inst.parse ).to.throw(/no arguments given/);
             });
 
-        });
+            it('should return null if it does not match', function() {
+                var inst = new metacarattere('/a/b/c');
 
-    });
-
-    describe('Pattern matcher', function() {
-
-        it('should accept patterns w/out placeholders', function(){
-            metacarattere("/no/pattern","/no/pattern");
-            // Should not throw any exception
-        });
-
-        it('should return undefined or null if the URLs do not have the same number of fields', function() {
-            var pattern = "/a/b/c";
-
-            ['/a','a/b/c/d/e'].forEach( function(url) {
-                expect( metacarattere(pattern, url) ).not.to.exist;
+                ['/a','a/b/c/d/e'].forEach( function(url) {
+                    expect( inst.parse(url) ).to.be.null;
+                });
             });
+
+            it('should return an object w/ key-value-paris if it does match', function() {
+                var inst = new metacarattere('/a/:b/:c');
+
+                expect( inst.parse('/a/3/4') ).to.deep.equal( { b: 3, c: 4 } );
+                expect( inst.parse('/a/hello/world') ).to.deep.equal( { b: 'hello', c: 'world' } );
+            });
+
+            it('should not match partly', function(){
+                var inst = new metacarattere("/vendor/:name/product/:prod");
+
+                expect( inst.parse('/vendor/apple') ).not.to.exist;
+                expect( inst.parse('/vendor/apple/product/macbookair') ).to.be.an('object');
+                expect( inst.parse('/vendor/apple/product/macbookair') ).to.deep.equal( { "name": "apple", "prod": "macbookair" } );
+                expect( inst.parse('/vendor/microsoft/product/codeplex/accounts/locked') ).not.to.exist;
+            });
+
+            it('should return undefined when not pattern was given', function() {
+                var inst = new metacarattere();
+
+                ['/a/3/4','/api/true/false','/collection/hello/world'].forEach( function(url) {
+                    expect(inst.match(url)).to.be.undefined;
+                });
+            });
+
         });
 
-        it('should return undefined for invalid strings', function() {
-            expect( metacarattere(42) ).not.to.exist;
-            expect( metacarattere('/:id',4) ).not.to.exist;
-            expect( metacarattere('/:id')({a:99}) ).not.to.exist;
-        });
-
-        it('should match correctly', function() {
-            var pattern = "/employees/:id/status/:state";
-            var url     = "/employees/4/status/fired";
-            var result  = { "id": "4", "state": "fired" };
-
-            expect( metacarattere(pattern, url) ).to.deep.equal(result);
-        });
-
-        it('should match using the returned function', function() {
-            var pattern = "/employees/:id/status/:state";
-            var url     = "/employees/4/status/fired";
-            var result  = { "id": "4", "state": "fired" };
-
-            expect( metacarattere(pattern)(url) ).to.deep.equal(result);
-        });
-
-        it('should not match partly', function(){
-            var pattern = metacarattere("/vendor/:name/product/:prod");
-
-            expect( pattern('/vendor/apple') ).not.to.exist;
-            expect( pattern('/vendor/apple/product/macbookair') ).to.be.an('object');
-            expect( pattern('/vendor/apple/product/macbookair') ).to.deep.equal( { "name": "apple", "prod": "macbookair" } );
-            expect( pattern('/vendor/microsoft/product/codeplex/accounts/locked') ).not.to.exist;
-        });
     });
 
 };
