@@ -5,7 +5,7 @@ module.exports = function(metacarattere) {
 
     describe('Export', function() {
 
-        it('should export a function', function(){
+        it('should export a (constructor) function', function(){
             expect(metacarattere).to.be.a('function');
         });
 
@@ -13,16 +13,52 @@ module.exports = function(metacarattere) {
 
     describe('Exported function', function() {
 
-        it('should return undefined when no arguments are given', function() {
-            expect( metacarattere() ).to.be.undefined;
+        it('should return undefined when invoked', function() {
+            expect( metacarattere('pattern') ).to.be.undefined;
         });
 
-        it('should return a curried function when one argument is given', function() {
-            expect( metacarattere('pattern') ).to.be.a('function');
+        it('should return an object when invoked with new', function() {
+            expect( new metacarattere('pattern') ).to.be.an('object');
         });
 
-        it('should not return a function when more than one argument is given', function() {
-            expect( metacarattere('pattern','url') ).to.not.be.a('function');
+        it('should not throw if no argument is given', function() {
+            new metacarattere();        // That's all
+        });
+
+    });
+
+    describe('metacarattere object', function() {
+
+        describe('match() function', function() {
+
+            it('should have a match() function', function() {
+                var inst = new metacarattere('pattern');
+
+                expect( inst.match ).to.be.a('function');
+            });
+
+            it('should throw if no arguments are given', function() {
+
+                var inst = new metacarattere('pattern');
+                expect( inst.match ).to.throw(/no arguments given/);
+            });
+
+        });
+
+        describe('parse() function', function() {
+
+            it('should have a parse() function', function() {
+                var inst = new metacarattere('pattern');
+
+                expect( inst.parse ).to.be.a('function');
+            });
+
+            it('should throw if no arguments are given', function() {
+
+                var inst = new metacarattere('pattern');
+                expect( inst.parse ).to.throw(/no arguments given/);
+            });
+
         });
 
     });
