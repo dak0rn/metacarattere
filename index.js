@@ -71,7 +71,7 @@
     var getPlaceholder = function(what) { return substr(what,2); };
 
     // Main stuff
-    var metacarattere = function( pattern, url ) {
+    var oldMetacarattere = function( pattern, url ) {
 
         if( 'string' !== typeof pattern )
             return undefined;
