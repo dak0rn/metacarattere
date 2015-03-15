@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         mochaTest: {
             dev: {
                 options: {
-                    reporter: 'nyan'
+                    // reporter: 'nyan'
                 },
                 src: ['test/dev.js']
             },
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    grunt.registerTask('test',['mochaTest']);
+    grunt.registerTask('test',['mochaTest:dev']);
     grunt.registerTask('default',['mochaTest:dev','uglify', 'mochaTest:minified']);
 
 };
