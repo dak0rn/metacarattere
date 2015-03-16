@@ -51,7 +51,7 @@ module.exports = function(metacarattere) {
                 var inst = new metacarattere('/a/b/c');
 
                 ['/a','a/b/c/d/e'].forEach( function(url) {
-                    expect( inst.parse(url) ).to.be.false;
+                    expect( inst.match(url) ).to.be.false;
                 });
             });
 
@@ -94,7 +94,7 @@ module.exports = function(metacarattere) {
             it('should return null if no arguments are given', function() {
 
                 var inst = new metacarattere(':pattern');
-                expect( inst.parse ).to.be.null;
+                expect( inst.parse() ).to.be.null;
             });
 
             it('should return null if it does not match', function() {
@@ -108,7 +108,7 @@ module.exports = function(metacarattere) {
             it('should return an object w/ key-value-paris if it does match', function() {
                 var inst = new metacarattere('/a/:b/:c');
 
-                expect( inst.parse('/a/3/4') ).to.deep.equal( { b: 3, c: 4 } );
+                expect( inst.parse('/a/3/4') ).to.deep.equal( { b: '3', c: '4' } );
                 expect( inst.parse('/a/hello/world') ).to.deep.equal( { b: 'hello', c: 'world' } );
             });
 
