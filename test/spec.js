@@ -68,7 +68,6 @@ module.exports = function(metacarattere) {
 
                 expect( inst.match('/vendor/apple') ).to.be.false;
                 expect( inst.match('/vendor/apple/product/macbookair') ).to.be.true;
-                expect( inst.match('/vendor/apple/product/macbookair') ).to.be.true;
                 expect( inst.match('/vendor/microsoft/product/codeplex/accounts/locked') ).not.to.be.false;
             });
 
