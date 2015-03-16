@@ -28,29 +28,47 @@ function will be exposed (as `window.metacarattere`).
 can load metacarattere like any other module.
 * If you are in a node.js environment, metacarattere can be required as usual.
 
-### The curried function
-`metacarattere` is a function that expects either one or two arguments:
+### The exposed function
+`metacarattere` is a constructor function that takes a pattern.
 
 ```javascript
-var metacarattere = function(pattern, url) { /*...*/ }
+var metacarattere = function(pattern) { /*...*/ }
 ```
 
-If only `pattern` is given, `metacarattere` returns a function that takes
-the URL and does all the magic with it. This pattern is called as *currying*.
+If no pattern is given, the created object will not match
+any URL so that `matches()` will always return `false` and `parse()` will
+always return `null`.
+However, it won't throw any exception or return `undefined` or `null`.
 
-### Matching URLs agains patterns
+### Match an URL
 
-Here is a short usage example:
+The `matches()` function can be used to test if the given URL matches
+the object's pattern.
 
 ```javascript
 var metacarattere = require('metacarattere');
 
-var pattern = "/api/:version/:collection/:store/:resource";
-var values;
-var matcher = metacarattere(pattern);       // Currying!
-var pretty = function(obj) { return JSON.stringify(obj, null, 4); };
+var pattern = new metacarattere("/api/:version/:collection/:store/:resource");
 
-values = matcher('/api/v1/users/max/card');
+pattern.matches('/api/v1/users/max/card');          // true
+pattern.matches('/api/v2/store/users/max/card');    // false
+pattern.matches();                                  // false
+pattern.matches('');                                // false
+```
+
+### Parse an URL
+
+The `parse()` function takes an URL and returns an object with key-value-mappings
+if the URL matches the pattern. Otherwise, `null` is returned.
+
+```javascript
+var metacarattere = require('metacarattere');
+
+var pattern = new metacarattere("/api/:version/:collection/:store/:resource");
+var pretty = function(obj) { return JSON.stringify(obj, null, 4); };
+var values;
+
+values = pattern.parse('/api/v1/users/max/card');
 console.log( pretty(values) );
 /*
 {
@@ -61,13 +79,13 @@ console.log( pretty(values) );
 }
 */
 
-values = matcher('/api/v1/users/max');
+values = pattern.parse('/api/v1/users/max');
 console.log( values );
 /*
-undefined
+null
 */
 
-values = matcher('/api/v7.9/cloud/files/database');
+values = pattern.parse('/api/v7.9/cloud/files/database');
 console.log( pretty(values) );
 /*
 {
