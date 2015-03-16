@@ -41,10 +41,10 @@ module.exports = function(metacarattere) {
                 expect( inst.match ).to.be.a('function');
             });
 
-            it('should throw if no arguments are given', function() {
+            it('should return false if arguments are given', function() {
 
                 var inst = new metacarattere(':pattern');
-                expect( inst.match ).to.throw(/no arguments given/);
+                expect( inst.match() ).to.be.false;
             });
 
             it('should return false if it does not match', function() {
@@ -91,10 +91,10 @@ module.exports = function(metacarattere) {
                 expect( inst.parse ).to.be.a('function');
             });
 
-            it('should throw if no arguments are given', function() {
+            it('should return null if no arguments are given', function() {
 
                 var inst = new metacarattere(':pattern');
-                expect( inst.parse ).to.throw(/no arguments given/);
+                expect( inst.parse ).to.be.null;
             });
 
             it('should return null if it does not match', function() {
