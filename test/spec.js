@@ -121,11 +121,11 @@ module.exports = function(metacarattere) {
                 expect( inst.parse('/vendor/microsoft/product/codeplex/accounts/locked') ).not.to.exist;
             });
 
-            it('should return undefined when not pattern was given', function() {
+            it('should return false if no pattern was given', function() {
                 var inst = new metacarattere();
 
                 ['/a/3/4','/api/true/false','/collection/hello/world'].forEach( function(url) {
-                    expect(inst.match(url)).to.be.undefined;
+                    expect(inst.match(url)).to.be.false;
                 });
             });
 
