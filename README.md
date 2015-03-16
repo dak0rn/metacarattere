@@ -38,7 +38,7 @@ var metacarattere = function(pattern) { /*...*/ }
 If no pattern is given, the created object will not match
 any URL so that `matches()` will always return `false` and `parse()` will
 always return `null`.
-However, it won't throw any exception or return `undefined` or `null`.
+However, it won't throw any exception.
 
 ### Match an URL
 
