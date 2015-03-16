@@ -130,13 +130,14 @@
             this._compiledExpression = replace(pattern, symbols.placeholder, symbols.regexPlaceholder);
         }
 
-        // Make sure we match full expressions only
+        // Make sure we match full patterns only
         // If no pattern was given, this creates the expression
         // $(?!)^ that never matches
         this._compiledExpression = new RegExp("^" + this._compiledExpression + "$");
 
     };
 
+    // Instance functions ('methods')
     metacarattere.prototype = {
         match: function(url) {
             return api.match.apply(this,arguments);
@@ -147,61 +148,6 @@
         }
     };
 
-    // Main stuff
-    var oldMetacarattere = function( pattern, url ) {
-
-        if( 'string' !== typeof pattern )
-            return undefined;
-
-        // Match placeholders
-        var placeholders = match(pattern, symbols.placeholder);
-
-        // Extract placeholder names
-        if( null !== placeholders )
-            placeholders = map(placeholders, getPlaceholder );
-        else
-            placeholders = [];
-
-        // Create a valid regex out of the pattern
-        // /api/:version/users/:id  =>  ^/api/([^\/]+)/users/([^\/]+)$
-        var compiledExpression = "^" + replace(pattern, symbols.placeholder, symbols.regexPlaceholder) + "$";
-
-        var matcher = function(url) {
-
-            if( 'string' !== typeof url )
-                return null;
-
-            var values = match(url, compiledExpression);
-            var i;
-            var result = {};
-            var len = placeholders.length;
-
-            if( null === values )
-                return null;
-
-            // The first match contains the whole expression: skip it
-            shift(values);
-
-            if( values.length !== len )
-                return null;
-
-            for( i = 0; i < len; i++ ) {
-                result[ placeholders[i] ] = values[i];
-            }
-
-            return result;
-        };
-
-        if( 'undefined' === typeof url )
-            return matcher;
-        else
-            return matcher(url);
-
-    };
-
-    // return function(pattern, url){
-    //     return metacarattere.apply(this,arguments);
-    // };
     return metacarattere;
 
 }));
