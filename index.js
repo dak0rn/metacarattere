@@ -105,7 +105,7 @@
         },
 
         match: function(url) {
-            res = 'string' === typeof url &&
+            return 'string' === typeof url &&
                 null !== match(url, this._compiledExpression);
         }
     };
