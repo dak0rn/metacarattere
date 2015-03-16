@@ -104,7 +104,7 @@
             return result;
         },
 
-        match: function(url) {
+        matches: function(url) {
             return 'string' === typeof url &&
                 null !== match(url, this._compiledExpression);
         }
@@ -139,8 +139,8 @@
 
     // Instance functions ('methods')
     metacarattere.prototype = {
-        match: function(url) {
-            return api.match.apply(this,arguments);
+        matches: function(url) {
+            return api.matches.apply(this,arguments);
         },
 
         parse: function(url) {

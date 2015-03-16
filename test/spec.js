@@ -33,25 +33,25 @@ module.exports = function(metacarattere) {
 
     describe('metacarattere instance', function() {
 
-        describe('match() function', function() {
+        describe('matches() function', function() {
 
             it('should exist', function() {
                 var inst = new metacarattere(':pattern');
 
-                expect( inst.match ).to.be.a('function');
+                expect( inst.matches ).to.be.a('function');
             });
 
             it('should return false if arguments are given', function() {
 
                 var inst = new metacarattere(':pattern');
-                expect( inst.match() ).to.be.false;
+                expect( inst.matches() ).to.be.false;
             });
 
             it('should return false if it does not match', function() {
                 var inst = new metacarattere('/a/b/c');
 
                 ['/a','a/b/c/d/e'].forEach( function(url) {
-                    expect( inst.match(url) ).to.be.false;
+                    expect( inst.matches(url) ).to.be.false;
                 });
             });
 
@@ -59,23 +59,23 @@ module.exports = function(metacarattere) {
                 var inst = new metacarattere('/a/:b/:c');
 
                 ['/a/3/4','/a/true/false','/a/hello/world'].forEach( function(url) {
-                    expect(inst.match(url)).to.be.true;
+                    expect(inst.matches(url)).to.be.true;
                 });
             });
 
             it('should not match partly', function(){
                 var inst = new metacarattere("/vendor/:name/product/:prod");
 
-                expect( inst.match('/vendor/apple') ).to.be.false;
-                expect( inst.match('/vendor/apple/product/macbookair') ).to.be.true;
-                expect( inst.match('/vendor/microsoft/product/codeplex/accounts/locked') ).to.be.false;
+                expect( inst.matches('/vendor/apple') ).to.be.false;
+                expect( inst.matches('/vendor/apple/product/macbookair') ).to.be.true;
+                expect( inst.matches('/vendor/microsoft/product/codeplex/accounts/locked') ).to.be.false;
             });
 
             it('should not match when no pattern is given', function() {
                 var inst = new metacarattere();
 
                 ['/a/3/4','/api/true/false','/collection/hello/world'].forEach( function(url) {
-                    expect(inst.match(url)).to.be.false;
+                    expect(inst.matches(url)).to.be.false;
                 });
             });
 
@@ -124,7 +124,7 @@ module.exports = function(metacarattere) {
                 var inst = new metacarattere();
 
                 ['/a/3/4','/api/true/false','/collection/hello/world'].forEach( function(url) {
-                    expect(inst.match(url)).to.be.false;
+                    expect(inst.matches(url)).to.be.false;
                 });
             });
 
