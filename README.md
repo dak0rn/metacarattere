@@ -1,6 +1,18 @@
 # metacarattere
 metacarattere is a small matcher for URLs with colon placeholders.
 
+
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Loading it](#loading-it)
+    - [`metacarattere()` - The exposed function](#the-exposed-function)
+    - [`.match()` - Match an URL](#match-an-url)
+    - [`.parse()` - Parse an URL](#parse-an-url)
+    - [`.getPattern()` - Get the pattern](#get-the-pattern)
+    - [`.getPlaceholders()` - Get the placeholders](#get-the-placeholders)
+    - [`.getExpression()` - Get the compiled expression](#get-the-compiled-expression)
+- [Naming](#naming)
+
 ## Installation
 
 You can install metacarattere for your node.js (or CommonJS in general) project
