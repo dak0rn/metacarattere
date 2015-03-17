@@ -12,6 +12,7 @@ metacarattere is a small matcher for URLs with colon placeholders.
     - [`.getPlaceholders()` - Get the placeholders](#get-the-placeholders)
     - [`.getExpression()` - Get the compiled expression](#get-the-compiled-expression)
 - [Naming](#naming)
+- [Try it](#try-it)
 
 ## Installation
 
@@ -142,3 +143,8 @@ new metacarattere().getExpression();    // ^(?!)$
 ## Naming
 
 metacarattere is the Italian word for *Wild card*.
+
+## Try it
+
+There is a [JSBin](http://jsbin.com/setuzu/edit?js,console) that automatically
+uses the latest version of metacarattere and can be used to play around with it.
