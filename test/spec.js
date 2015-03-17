@@ -130,6 +130,68 @@ module.exports = function(metacarattere) {
 
         });
 
+        describe('getPattern() function', function() {
+            it('should exist', function() {
+                var inst = new metacarattere('/:pattern');
+
+                expect( inst.getPattern ).to.be.a('function');
+            });
+
+            it('should return the original pattern', function() {
+                [ '/prod/:id', '/a/b/c/d/', '/version/key/:abc'].forEach(function(pattern) {
+                    var inst = new metacarattere(pattern);
+                    expect( inst.getPattern() ).to.equal(pattern);
+                });
+            });
+        });
+
+        describe('getPlaceholders() function', function() {
+            it('should exist', function() {
+                var inst = new metacarattere('/:pattern');
+
+                expect( inst.getPlaceholders ).to.be.a('function');
+            });
+
+            it('should return the placeholders', function() {
+                [
+                    { pattern: '/prod/:id', placeholders: ['id'] },
+                    { pattern: '/a/b/c/d', placeholders: [] },
+                    { pattern: '/:version/:key/:abc', placeholders: ['version','key','abc'] },
+                    { pattern: '', placeholders: [] },
+                    { pattern: undefined, placeholders: [] },
+                    { pattern: null, placeholders: [] }
+
+                ].forEach(function(what) {
+                    var inst = new metacarattere(what.pattern);
+                    expect( inst.getPlaceholders() ).to.eql(what.placeholders);
+                });
+            });
+        });
+
+        describe('getExpression() function', function() {
+            it('should exist', function() {
+                var inst = new metacarattere('/:pattern');
+
+                expect( inst.getExpression ).to.be.a('function');
+            });
+
+            it('should return the compiled regex', function() {
+
+                [
+                    { pattern: '/prod/:id', regex: '^/prod/([^\/]+)$' },
+                    { pattern: '/a/b/c/d', regex: '^/a/b/c/d$' },
+                    { pattern: '/:version/:key/:abc', regex: '^/([^\/]+)/([^\/]+)/([^\/]+)$' },
+                    { pattern: '',  regex: '^$' },
+                    { pattern: undefined,  regex: '^(?!)$' },
+                    { pattern: null,  regex: '^(?!)$' }
+
+                ].forEach(function(what) {
+                    var inst = new metacarattere(what.pattern);
+                    expect( inst.getPlaceholders() ).to.eql(what.placeholders);
+                });
+            });
+        });
+
     });
 
 };
