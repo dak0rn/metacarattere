@@ -115,6 +115,7 @@
         // Default values
         this._compiledExpression = '(?!)';      // Never matching default
         this._placeholders = [];
+        this._pattern = pattern;
 
         var tmp;
 
@@ -145,6 +146,19 @@
 
         parse: function(url) {
             return api.parse.apply(this,arguments);
+        },
+
+        // Getters
+        getPattern: function() {
+            return this._pattern;
+        },
+
+        getPlaceholders: function() {
+            return this._placeholders;
+        },
+
+        getExpression: function() {
+            return this._compiledExpression;
         }
     };
 
