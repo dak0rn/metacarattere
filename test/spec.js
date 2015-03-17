@@ -138,7 +138,7 @@ module.exports = function(metacarattere) {
             });
 
             it('should return the original pattern', function() {
-                [ '/prod/:id', '/a/b/c/d/', '/version/key/:abc'].forEach(function(pattern) {
+                [ '/prod/:id', '/a/b/c/d/', '/version/key/:abc', undefined, null ].forEach(function(pattern) {
                     var inst = new metacarattere(pattern);
                     expect( inst.getPattern() ).to.equal(pattern);
                 });
