@@ -1,3 +1,9 @@
+# 2.1.0
+
+* The `.getExpression()` function can be used to retrieve the compiled expression (`RegExp`)
+* The `.getPlaceholders()` function can be used to retrieve an array with placeholders
+* The `getPattern()` function can be used to retrieve the original pattern
+
 # v2.0.0
 
 ## Breaking changes

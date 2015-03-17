@@ -97,6 +97,36 @@ console.log( pretty(values) );
 */
 ```
 
+### Get the pattern
+
+The original pattern given to the constructor function can be retrieved using the
+`getPattern()` function.
+
+```javascript
+new metacarattere('/api/:version/:document').getPattern();  // '/api/:version/:document'
+new metacarattere().getPattern();   // undefined
+new metacarattere(null).getPattern();   // null
+```
+
+### Get the placeholders
+The placeholders defined in the pattern can be accessed using `getPlaceholders()`.
+
+```javascript
+new metacarattere('/api/:version/:document').getPlaceholders();  // ['version','document']
+new metacarattere().getPlaceholders();  // [ ]
+new metacarattere(null).getPlaceholders();   // [ ]
+```
+
+### Get the compiled expression
+If it is required to get the compiled regular expression for the pattern the
+`getExpression()` can be used to get it.
+
+```javascript
+new metacarattere('/:version/:key/:abc').getExpression();       // ^/([^\/]+)/([^\/]+)/([^\/]+)$
+new metacarattere('').getExpression();  // ^$
+new metacarattere().getExpression();    // ^(?!)$
+```
+
 ## Naming
 
 metacarattere is the Italian word for *Wild card*.
