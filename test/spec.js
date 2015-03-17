@@ -178,16 +178,16 @@ module.exports = function(metacarattere) {
             it('should return the compiled regex', function() {
 
                 [
-                    { pattern: '/prod/:id', regex: '^/prod/([^\/]+)$' },
-                    { pattern: '/a/b/c/d', regex: '^/a/b/c/d$' },
-                    { pattern: '/:version/:key/:abc', regex: '^/([^\/]+)/([^\/]+)/([^\/]+)$' },
-                    { pattern: '',  regex: '^$' },
-                    { pattern: undefined,  regex: '^(?!)$' },
-                    { pattern: null,  regex: '^(?!)$' }
+                    { pattern: '/prod/:id', regex: new RegExp('^/prod/([^\/]+)$').toString() },
+                    { pattern: '/a/b/c/d', regex: new RegExp('^/a/b/c/d$').toString() },
+                    { pattern: '/:version/:key/:abc', regex: new RegExp('^/([^\/]+)/([^\/]+)/([^\/]+)$').toString() },
+                    { pattern: '',  regex: new RegExp('^$').toString() },
+                    { pattern: undefined,  regex: new RegExp('^(?!)$').toString() },
+                    { pattern: null,  regex: new RegExp('^(?!)$').toString() }
 
                 ].forEach(function(what) {
                     var inst = new metacarattere(what.pattern);
-                    expect( inst.getPlaceholders() ).to.eql(what.placeholders);
+                    expect( inst.getExpression().toString() ).to.equal(what.regex);
                 });
             });
         });
