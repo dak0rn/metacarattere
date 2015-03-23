@@ -55,6 +55,10 @@
         return _match.call(string, what);
     };
 
+    var isObject = function(what) {
+        return '[object Object]' === '' + what;
+    };
+
     // Symbols
     var symbols = {
 
@@ -107,6 +111,28 @@
         matches: function(url) {
             return 'string' === typeof url &&
                 null !== match(url, this._compiledExpression);
+        },
+
+        build: function(substs) {
+
+            if( 'undefined' === typeof substs || null === substs || ! isObject(substs) )
+                return null;
+
+            if( 'string' !== typeof this._pattern )
+                return null;
+
+            var key;
+            var value;
+            var source = this._pattern;
+
+            for( key in substs ) {
+                value = substs[key];
+
+                source = source.replace(':'+key, value);
+            }
+
+            return source;
+
         }
     };
 
@@ -159,6 +185,10 @@
 
         getExpression: function() {
             return this._compiledExpression;
+        },
+
+        build: function(substs) {
+            return api.build.apply(this, arguments);
         }
     };
 

@@ -1,5 +1,4 @@
 var expect = require('chai').expect;
-//var metacarattere = require('../index.js');
 
 module.exports = function(metacarattere) {
 
@@ -189,6 +188,49 @@ module.exports = function(metacarattere) {
                     var inst = new metacarattere(what.pattern);
                     expect( inst.getExpression().toString() ).to.equal(what.regex);
                 });
+            });
+        });
+
+        describe('build() function', function() {
+            it('should exist', function() {
+                var m = new metacarattere('/:pattern');
+                expect( m.build ).to.be.a('function');
+            });
+
+            it('should build an URL correctly', function() {
+                var m = new metacarattere('/:a/:b/:c');
+                var values = { a: 'hello', b: 'world', c: 'eof' };
+                expect( m.build(values) ).to.equal('/hello/world/eof');
+            });
+
+            it('should build partly', function() {
+                var m = new metacarattere('/:a/:b/:c');
+                var values = { a: 'hello', b: 'world' };
+                expect( m.build(values) ).to.equal('/hello/world/:c');
+            });
+
+            it('should return null if no substitution values are given', function() {
+                expect( new metacarattere('/:a').build() ).to.be.null;
+                expect( new metacarattere('/:a').build(null) ).to.be.null;
+            });
+
+            it('should return null if an invalid pattern was given', function() {
+
+                [undefined, null, 42].forEach( function(pattern) {
+                    [{a:'b'}, '', undefined, null].forEach( function(substs) {
+                        expect( new metacarattere(pattern).build(substs) ).to.be.null;
+                    });
+                });
+
+            });
+
+            it('should produces a re-matching pattern', function() {
+                var m = new metacarattere('/:a/:b/:c');
+                var values = { a: 'hello', b: 'world', c: 'neo' };
+                var str = m.build(values);
+                expect( str ).to.equal('/hello/world/neo');
+                expect( m.matches(str) ).to.be.true;
+                expect( m.parse(str) ).to.deep.equal(values);
             });
         });
 

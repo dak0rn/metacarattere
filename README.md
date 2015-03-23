@@ -8,6 +8,7 @@ metacarattere is a small matcher for URLs with colon placeholders.
     - [`metacarattere()` - The exposed function](#the-exposed-function)
     - [`.match()` - Match an URL](#match-an-url)
     - [`.parse()` - Parse an URL](#parse-an-url)
+    - [`.build()` - Replace placeholders](#replace-placeholders)
     - [`.getPattern()` - Get the pattern](#get-the-pattern)
     - [`.getPlaceholders()` - Get the placeholders](#get-the-placeholders)
     - [`.getExpression()` - Get the compiled expression](#get-the-compiled-expression)
@@ -109,6 +110,22 @@ console.log( pretty(values) );
 }
 */
 ```
+
+### Replace placeholders
+If you need to replace placeholders of the pattern with values you can use the
+`.build()` function. Given an object with key-value-mappings it will return a
+new pattern with replaced values. This also works with partly replacements.
+
+```javascript
+var m     = new metacarattere('/:service/:name/:version');
+var api   = new metacarattere( m.build({'service':'api'}) );
+var apiV2 = new metacarattere( api.build({'version': 'v2'}) );
+
+api.getPattern();   // /api/:name/:version
+apiV2.getPattern(); // /api/:name/:v2
+```
+
+`.build()` will return `null` if the pattern is invalid or if you do not submit a valid object.
 
 ### Get the pattern
 
