@@ -1,7 +1,7 @@
 {
   "name": "metacarattere",
   "main": "index.js",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "homepage": "https://github.com/dak0rn/metacarattere",
   "authors": [
     "dak0rn <daniel@suitsoft.eu>"
@@ -23,6 +23,8 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    ".git",
+    ".idea"
   ]
 }

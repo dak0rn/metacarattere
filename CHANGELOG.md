@@ -1,3 +1,8 @@
+# 2.2.0
+
+* There is now a `.build()` function that allows you to replace parts of the
+  pattern with given values.
+
 # 2.1.0
 
 * The `.getExpression()` function can be used to retrieve the compiled expression (`RegExp`)
