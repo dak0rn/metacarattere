@@ -194,7 +194,7 @@ module.exports = function(metacarattere) {
         describe('build() function', function() {
             it('should exist', function() {
                 var m = new metacarattere('/:pattern');
-                expect( inst.build ).to.be.a('function');
+                expect( m.build ).to.be.a('function');
             });
 
             it('should build an URL correctly', function() {
