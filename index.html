@@ -348,6 +348,30 @@ users.parse('/api/v1/users/userid/903'); // null </code></pre>
 
             <div class="block-2"></div>
             <div class="container">
+                <h1 id="build">.build()</h1>
+                <h2>Replace placeholders</h2>
+                <p>If you need to replace placeholders of the pattern with values you can use the
+                <code>.build()</code> function. Given an object with key-value-mappings it will return a
+                new pattern with replaced values. This also works with partly replacements.</p>
+            </div>
+
+            <div class="gray">
+                <div class="container">
+                    <pre><code>var m     = new metacarattere('/:service/:name/:version');
+var api   = new metacarattere( m.build({'service':'api'}) );
+var apiV2 = new metacarattere( api.build({'version': 'v2'}) );
+
+api.getPattern();   // /api/:name/:version
+apiV2.getPattern(); // /api/:name/:v2</code></pre>
+                </div>
+            </div>
+
+            <div class="container">
+                <p><code>.build()</code> will return <code>null</code> if the pattern is invalid or if you do not submit a valid object.</p>
+            </div>
+
+            <div class="block-2"></div>
+            <div class="container">
                 <h1 id="getExpression">.getExpression()</h1>
                 <h2>Get the compiled expression</h2>
                 <p>If it is required to get the compiled regular expression for the pattern <code>getExpression()</code> can be used to get it.</p>
