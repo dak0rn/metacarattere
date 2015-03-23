@@ -216,7 +216,7 @@ module.exports = function(metacarattere) {
 
             it('should return null if an invalid pattern was given', function() {
 
-                [undefined, null, 42].forEeach( function(pattern) {
+                [undefined, null, 42].forEach( function(pattern) {
                     [{a:'b'}, '', undefined, null].forEach( function(substs) {
                         expect( new metacarattere(pattern).build(substs) ).to.be.null;
                     });
