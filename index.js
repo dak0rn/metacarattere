@@ -107,6 +107,10 @@
         matches: function(url) {
             return 'string' === typeof url &&
                 null !== match(url, this._compiledExpression);
+        },
+
+        build: function(substs) {
+
         }
     };
 
@@ -159,6 +163,10 @@
 
         getExpression: function() {
             return this._compiledExpression;
+        },
+
+        build: function() {
+            return api.build.apply(this, arguments);
         }
     };
 
